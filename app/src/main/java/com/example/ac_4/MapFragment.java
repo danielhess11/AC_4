@@ -93,6 +93,11 @@ public class MapFragment extends Fragment {
                         markerOptions.position(latLng);
                         markerOptions.title(latLng.latitude + " : " + latLng.longitude);
                         googleMap.clear();
+                        googleMap.addMarker(markerOptions);
+
+                        // Update the latitude and longitude values in MainActivity
+                        ((MainActivity) getActivity()).setLatitude(latLng.latitude);
+                        ((MainActivity) getActivity()).setLongitude(latLng.longitude);
 
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                                 latLng, 10
