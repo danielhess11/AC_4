@@ -10,7 +10,11 @@ import android.os.Bundle;
 import com.example.ac_4.databinding.ActivityMainBinding;
 import com.example.ac_4.databinding.FragmentMapBinding;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    public double latitude;
+    public double longitude;
 
     ActivityMainBinding binding;
     @Override
@@ -41,4 +45,22 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+
 }

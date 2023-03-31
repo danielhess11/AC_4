@@ -21,8 +21,7 @@ import org.json.JSONObject;
 
 public class WeatherFragment extends Fragment {
 
-    private static final String ARG_LATITUDE = "latitude";
-    private static final String ARG_LONGITUDE = "longitude";
+
     private TextView tvLocation;
     private TextView tvTemperature;
     private TextView tvWeatherDescription;
@@ -43,12 +42,9 @@ public class WeatherFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
-        // Retrieve the latitude and longitude values from the arguments bundle
-        Bundle args = getArguments();
-        if (args != null) {
-            latitude = args.getDouble("latitude");
-            longitude = args.getDouble("longitude");
-        }
+        // Get the latitude and longitude from the MainActivity
+        latitude = ((MainActivity) getActivity()).getLatitude();
+        longitude = ((MainActivity) getActivity()).getLongitude();
 
         tvLocation = view.findViewById(R.id.tv_location);
         tvTemperature = view.findViewById(R.id.tv_temperature);

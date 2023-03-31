@@ -6,7 +6,6 @@ import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -23,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapFragment extends Fragment {
@@ -42,7 +42,7 @@ public class MapFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 String location = searchView.getQuery().toString();
-                List<Address> addressList = null;
+                List<Address> addressList = new ArrayList<>();
 
                 if (location != null || !location.equals("")) {
                     // Geocoder geocoder = new Geocoder(getActivity(), Locale.ENGLISH);
@@ -56,20 +56,13 @@ public class MapFragment extends Fragment {
                     Address address = addressList.get(0);
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
 
-                    // Create a bundle with latitude and longitude values
-                    Bundle bundle = new Bundle();
-                    bundle.putDouble("latitude", address.getLatitude());
-                    bundle.putDouble("longitude", address.getLongitude());
+                    // Set the global variables in MainActivity
+                    ((MainActivity) getActivity()).setLatitude(address.getLatitude());
+                    ((MainActivity) getActivity()).setLongitude(address.getLongitude());
 
-                    // Create WeatherFragment and set its arguments
+                    // Create WeatherFragment
                     WeatherFragment weatherFragment = new WeatherFragment();
-                    weatherFragment.setArguments(bundle);
 
-                    // Load WeatherFragment
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.frame_layout, weatherFragment)
-                            .commit();
 
                     // Update the map view
                     supportMapFragment.getMapAsync(googleMap -> {
@@ -78,6 +71,7 @@ public class MapFragment extends Fragment {
                 }
                 return false;
             }
+
 
 
 
@@ -103,6 +97,7 @@ public class MapFragment extends Fragment {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                                 latLng, 10
                                 // Set the latitude and longitude values
+
 
                         ));
                     }
